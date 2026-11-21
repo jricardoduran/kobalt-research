@@ -1,0 +1,19 @@
+{
+  "continuity": "comercio",
+  "metaContract": "kobalt.continuity.ui.v1",
+  "definition": {
+    "title": "Comercio",
+    "views": [
+      {"id":"products","title":"Productos","event":"product.upsert","mode":"latestByKey","key":"sku","fields":[{"path":"sku","label":"SKU"},{"path":"name","label":"Producto"},{"path":"price","label":"Precio","format":"cop"},{"path":"stock","label":"Stock"}]},
+      {"id":"sales","title":"Ventas","event":"sale.recorded","mode":"append","fields":[{"path":"id","label":"Venta"},{"path":"date","label":"Fecha"},{"path":"sku","label":"SKU"},{"path":"qty","label":"Cantidad"},{"path":"total","label":"Total","format":"cop"},{"path":"status","label":"Estado"}]}
+    ]
+  },
+  "events": [
+    {"op":"product.upsert","data":{"sku":"P001","name":"Bata personalizada","price":79000,"stock":5}},
+    {"op":"product.upsert","data":{"sku":"P002","name":"Sandalias infantiles","price":55000,"stock":8}},
+    {"op":"sale.recorded","data":{"id":"V001","date":"2026-11-21","sku":"P001","qty":1,"total":79000,"status":"pagada"}},
+    {"op":"product.upsert","data":{"sku":"P001","name":"Bata personalizada","price":79000,"stock":4}},
+    {"op":"product.upsert","data":{"sku":"P003","name":"Poncho microfibra","price":45000,"stock":12}},
+    {"op":"sale.recorded","data":{"id":"V002","date":"2026-11-21","sku":"P003","qty":2,"total":90000,"status":"pendiente"}}
+  ]
+}
