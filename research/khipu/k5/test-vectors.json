@@ -1,0 +1,43 @@
+{
+    "ok": true,
+    "version": "K5.1",
+    "vectors": [
+        {
+            "type": 2,
+            "bodyHex": "7b2261223a312c2262223a327d",
+            "recordHex": "000206d0f644c24474625844c4447464fbfd0795227105b299d1f2a1bb697b9cfdb836111f907f425a5991a924df1cfe26",
+            "rid": "959e1d8d4e2bc9d4c408a13b6493024bfd6e6d74c15ee31c06103f5d88ec20e0",
+            "hash": "fe83ca913882d94ce8f950ddb4bdce7edc1b088fc83fa12d2cc8d4926f8e7f13",
+            "W": 6,
+            "k": 7
+        },
+        {
+            "type": 3,
+            "bodyHex": "636f6e736f6c652e6c6f6728224b3522293b",
+            "recordHex": "00030790636f6e736f6c652e6c6f6728224b3522293be18a742b5d0351383ee58776577cc84f8222294a905556c972ffaeb579a56644",
+            "rid": "94e3552b4a2039495d61dac6a677ce7579b0db123c6bcca3ab3abc3fb5d0818a",
+            "hash": "e18a742b5d0351383ee58776577cc84f8222294a905556c972ffaeb579a56644",
+            "W": 7,
+            "k": 8
+        },
+        {
+            "type": 0,
+            "bodyHex": "00ff10",
+            "recordHex": "000004c007f884d23333b9262dfbf2b79e1cad24c3d5fbac320758bc6eec2f89477a3dc0316048",
+            "rid": "6990d5cc2a72ea131241dd2346fd2475a091f19f5f19ac114fd9d73f05df2199",
+            "hash": "9a46667724c5bf7e56f3c395a4987abf758640eb178ddd85f128ef47b8062c09",
+            "W": 4,
+            "k": 5
+        },
+        {
+            "type": 65000,
+            "bodyHex": "646573636f6e6f6369646f207065726f206d6174657269616c6d656e74652076c3a16c69646f",
+            "recordHex": "fde808983232b9b1b7b737b1b4b237903832b9379036b0ba32b934b0b636b2b73a32903b61d0b634b237c0b53a01a1b8b1dbfa713975bab17ea9e98ff7345cbadba948f4cad625b685c400",
+            "rid": "819c290e3984de190c4d4badadffde7922c3ad43a22266d1b5bb4e5d647a8eac",
+            "hash": "816a7403437163b7f4e272eb7562fd53d31fee68b975b75291e995ac4b6d0b88",
+            "W": 8,
+            "k": 9
+        }
+    ],
+    "streamBytes": 142
+}

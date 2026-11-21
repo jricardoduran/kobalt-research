@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Khipu-5 · K5.1</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#171717;background:#f5f5f3}
+body{margin:0}main{max-width:1100px;margin:auto;padding:24px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}.card{background:#fff;border:1px solid #ddd;border-radius:14px;padding:16px}label{display:block;margin:.8rem 0 .3rem;font-weight:650}textarea,input,select,button{font:inherit}textarea{width:100%;min-height:150px;box-sizing:border-box}select,input[type=file]{width:100%}button{padding:10px 14px;margin:6px 6px 0 0;border:1px solid #aaa;border-radius:9px;background:white;cursor:pointer}button.primary{background:#171717;color:white;border-color:#171717}pre{white-space:pre-wrap;word-break:break-word;background:#111;color:#eee;padding:14px;border-radius:10px;max-height:420px;overflow:auto}.ok{color:#08783f}.bad{color:#b42318}.muted{color:#666}.pill{display:inline-block;padding:3px 8px;border-radius:999px;background:#eee;margin-right:6px}.big{font-size:1.15rem;font-weight:700}
+</style>
+</head>
+<body><main>
+<h1>Khipu-5 <small class="muted">K5.1</small></h1>
+<p><b>[T16][W8][LEN<sub>k</sub>][BODY][SHA-256]</b>. El cuerpo queda nativo: si T=JSON, el BODY extraído es JSON real.</p>
+<div class="grid">
+<section class="card">
+<h2>1. Crear K5</h2>
+<label for="type">Tipo de procesamiento T</label><select id="type"></select>
+<label for="text">Texto/cuerpo (o selecciona archivo)</label><textarea id="text">{"producto":"P1","precio":35000}</textarea>
+<label for="file">Archivo opcional</label><input id="file" type="file">
+<button class="primary" id="encode">Crear y verificar K5</button><button id="selftest">Pruebas internas</button>
+</section>
+<section class="card">
+<h2>2. Resultado</h2>
+<div id="summary" class="muted">Aún no hay registro.</div>
+<button id="downloadK5" disabled>Descargar .k5</button><button id="downloadBody" disabled>Extraer cuerpo nativo</button>
+<pre id="result"></pre>
+</section>
+<section class="card">
+<h2>3. Abrir un .k5</h2>
+<input id="k5file" type="file" accept=".k5,application/octet-stream">
+<button class="primary" id="openK5">Verificar y abrir</button>
+<p class="muted">La verificación material no necesita que este navegador sepa procesar el tipo T.</p>
+<pre id="openResult"></pre>
+</section>
+<section class="card">
+<h2>Qué prueba</h2>
+<p><span class="pill">T</span>cómo tramitar BODY</p><p><span class="pill">W</span>cómo leer LEN</p><p><span class="pill">LEN</span>dónde termina BODY</p><p><span class="pill">BODY</span>bytes nativos</p><p><span class="pill">HASH</span>compromete T+W+LEN+BODY</p>
+<p><b>Regla:</b> si cualquiera de las condiciones materiales falla, el registro se aborta.</p>
+</section>
+</div>
+</main>
+<script src="khipu5.js"></script>
+<script>
+const K=Khipu5;
+const type=document.querySelector('#type'), textBox=document.querySelector('#text'), file=document.querySelector('#file');
+const result=document.querySelector('#result'), summary=document.querySelector('#summary');
+let current=null;
+for(const info of Object.values(K.TYPES)){const o=document.createElement('option');o.value=info.code;o.textContent=`0x${info.code.toString(16).padStart(4,'0')} · ${info.name} · ${info.extension}`;type.appendChild(o)}
+type.value=2;
+function download(bytes,name,mime='application/octet-stream'){const blob=new Blob([bytes],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+async function bodyFromUi(){if(file.files[0])return new Uint8Array(await file.files[0].arrayBuffer());return K.utf8(textBox.value)}
+async function create(){try{const body=await bodyFromUi();const e=await K.encode(Number(type.value),body);const d=await K.decode(e.bytes);current=d;const q=K.quickCheckRepresentation(d.type,d.body);summary.innerHTML=`<span class="ok big">MATERIAL_VALID</span><br>T=${d.type} (${d.typeInfo.name}) · BODY=${d.body.length} bytes · registro=${d.bytes.length} bytes`;result.textContent=JSON.stringify({version:d.version,type:d.type,typeInfo:d.typeInfo,W:d.W,k:d.k,bodyBits:d.bodyBits,hash:d.hash,rid:d.rid,representationCheck:q,recordHex:K.hex(d.bytes)},null,2);downloadK5.disabled=false;downloadBody.disabled=false;}catch(e){current=null;summary.innerHTML=`<span class="bad big">ABORT</span>`;result.textContent=e.stack||String(e)}}
+document.querySelector('#encode').onclick=create;
+document.querySelector('#selftest').onclick=async()=>{try{const r=await K.selfTest();summary.innerHTML=`<span class="ok big">SELFTEST PASS</span>`;result.textContent=JSON.stringify(r,null,2)}catch(e){summary.innerHTML=`<span class="bad big">SELFTEST FAIL</span>`;result.textContent=e.stack||String(e)}};
+document.querySelector('#downloadK5').onclick=()=>{if(current)download(current.bytes,`${current.rid.slice(0,16)}.k5`)};
+document.querySelector('#downloadBody').onclick=()=>{if(current)download(current.body,`${current.rid.slice(0,16)}${current.typeInfo.extension}`,current.typeInfo.mime)};
+document.querySelector('#openK5').onclick=async()=>{const out=document.querySelector('#openResult');try{const f=document.querySelector('#k5file').files[0];if(!f)throw Error('Selecciona un archivo .k5');const d=await K.decode(new Uint8Array(await f.arrayBuffer()));current=d;downloadK5.disabled=false;downloadBody.disabled=false;out.textContent=JSON.stringify({status:'MATERIAL_VALID',type:d.type,typeInfo:d.typeInfo,bodyBytes:d.body.length,hash:d.hash,rid:d.rid,representationCheck:K.quickCheckRepresentation(d.type,d.body)},null,2)}catch(e){out.textContent='ABORT\n'+(e.stack||String(e))}};
+</script>
+</body></html>
