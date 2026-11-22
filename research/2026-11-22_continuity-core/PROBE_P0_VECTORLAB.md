@@ -1,131 +1,78 @@
-# Probeta P0 — VectorLab sobre Génesis
+# Probeta P0 — VectorLab sobre una continuidad de App
 
 **Fecha:** 2026-11-22
-**Tipo:** probeta conceptual/UI antes de implementación completa.
+**Tipo:** probeta conceptual/UI del núcleo, sin dependencia de Génesis/Dashboard.
 
 ## Pregunta
 
-¿Puede una continuidad privada descubierta desde Génesis crear su propia metaestructura y derivar posiciones/vectores determinísticamente sin tablas/schema hardcodeados?
+¿Puede Continuity Core recibir una continuidad `C_VectorLab`, descubrir su metaestructura y derivar posiciones/vectores determinísticamente sin tablas ni schema hardcodeados?
 
 ## Fixture inicial
 
-Contexto ya reconocido por Génesis V3.1.8:
+Asumimos resuelto: usuario, Génesis, mundos, Dashboard, configuración de Apps habilitadas y selección de VectorLab.
 
-`W_K = Keyed(K)`
+**Input real de P0:**
 
-`W_D = Keyed(d)`
+`C_VectorLab`
 
-`Dashboard_D Current`.
+## Secuencia de hechos
 
-Existe `VectorLabTemplate` en W_K con meta-contratos mínimos.
+`r0=AppGenesis`
+`r1=EntityKindDefinition(Item)`
+`r2=ParameterDefinition(Count,Item,Unsigned8,LatestAssignment)`
+`r3=Admit_Item(E0)`
+`r4=Assign(E0,Count,7)`
+`r5=Admit_Item(E1)`
+`r6=Assign(E1,Count,3)`
+`r7=ParameterDefinition(Enabled,Item,Boolean,LatestAssignment)`
+`r8=Assign(E0,Enabled,true)`
 
-## Secuencia de hechos de prueba
-
-`r0 = AppGenesis(VectorLabTemplate)`
-
-`r1 = EntityKindDefinition(Item)`
-
-`r2 = ParameterDefinition(Count,Item,Unsigned8,LatestAssignment)`
-
-`r3 = Admit_Item(E0)`
-
-`r4 = Assign(E0,Count,7)`
-
-`r5 = Admit_Item(E1)`
-
-`r6 = Assign(E1,Count,3)`
-
-`r7 = ParameterDefinition(Enabled,Item,Boolean,LatestAssignment)`
-
-`r8 = Assign(E0,Enabled,true)`.
-
-## Resultado esperado por prefijo
+## Resultado esperado
 
 `h2: classes={Item}; params={Count}; S_Item=()`
-
 `h3: S_Item=(E0); pos(E0)=0; V_Count=[bottom]`
-
 `h4: V_Count=[7]`
-
 `h5: S_Item=(E0,E1); pos(E1)=1; V_Count=[7,bottom]`
-
 `h6: V_Count=[7,3]`
-
 `h7: V_Enabled=[bottom,bottom]`
+`h8: V_Enabled=[true,bottom]`
 
-`h8: V_Enabled=[true,bottom]`.
+## UI mínima
 
-## Interacción UI mínima
+Cuatro paneles: Hechos recorridos; Metaestado K_h; Estado S_h; Vectores/materialización M_h.
 
-La UI de laboratorio debe tener solo cuatro paneles:
+Controles mínimos: Reset, +1 hecho, Hasta head, Añadir entidad, Añadir parámetro, Asignar valor.
 
-1. `Hechos` — secuencia/prefijo recorrido;
-2. `Metaestado K_h` — clases, parámetros y contratos descubiertos;
-3. `Estado S_h` — secuencias/posiciones derivadas;
-4. `Vectores M_h` — vectores lógicos/materializados.
-
-Controles:
-
-`Reset | +1 hecho | Hasta head | Añadir entidad | Añadir parámetro | Asignar valor`.
-
-No necesita UI comercial.
-
-## Pruebas obligatorias
+## Pruebas
 
 ### P0.1 Determinismo
-
-Repetir replay completo dos veces:
-
-`Project(C_h)==Project(C_h)`.
+`same C_h => same M_h`
 
 ### P0.2 Posición no declarada
-
-Inspeccionar todos los hechos: ninguno contiene `slot`.
+Ningún hecho contiene `slot`.
 
 ### P0.3 Estabilidad
+Tras admitir E1, `pos(E0)=0`.
 
-Tras admitir E1, `pos(E0)` sigue siendo 0.
+### P0.4 Metaestructura dinámica
+`Enabled` aparece después de E0/E1 sin reescribir admisiones.
 
-### P0.4 Schema dinámico
-
-Enabled aparece después de E0/E1 sin reescribir sus admisiones.
-
-### P0.5 Sparse semantics
-
-`bottom` significa ausencia; no confundir con false/0/null.
+### P0.5 Ausencia
+`bottom != false != 0`
 
 ### P0.6 Incrementalidad
+Añadir `r9=Assign(E0,Count,9)` y exigir:
 
-Guardar M_h8. Añadir:
+`FoldDelta(M_h8,r9)=FullReplay(r0...r9)`
 
-`r9=Assign(E0,Count,9)`.
+### P0.7 Independencia de codec
+Dense uint8 y sparse map deben representar el mismo vector lógico.
 
-Exigir:
+### P0.8 Frontera
+Nada en P0 depende de login, Dashboard o listado de Apps.
 
-`FoldDelta(M_h8,r9)==FullReplay(r0..r9)`.
+## Siguiente investigación
 
-### P0.7 Independencia del codec
+`EntityKindDefinition -> EntityAdmission -> ConstitutiveOrder -> ParameterDefinition -> Assignment/Fold -> LogicalVector`
 
-Materializar Count como dense uint8 y como sparse map. Ambos deben representar el mismo vector lógico.
-
-### P0.8 Frontera Genesis/Core
-
-Cambiar el contenido de VectorLab no modifica raíces/Views de Génesis.
-
-## Falsaciones deliberadas
-
-- introducir Assignment antes de definir parámetro → unresolved/rejected, nunca inventar definición;
-- introducir Assignment a entidad no admitida → unresolved/rejected;
-- intentar usar un slot declarado distinto del derivado → el slot declarado no tiene autoridad/idealmente ni existe en contrato;
-- barajar orden físico de storage conservando relaciones causales → misma proyección;
-- cambiar codec → misma semántica.
-
-## Salida
-
-Si P0 pasa, tenemos evidencia para implementar las siguientes probetas:
-
-`P1 Parameter templates`
-`P2 Relation/Invariant`
-`P3 Reference vectors`
-`P4 Snapshot+delta/K5`
-`P5 Commerce specialization`.
+antes de Commerce.
