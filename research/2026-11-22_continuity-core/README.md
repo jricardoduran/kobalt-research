@@ -385,3 +385,16 @@ El flujo canónico desde `Génesis · Creador de Mundos V3.1.8` hacia una contin
 La primera probeta general está en `PROBE_P0_VECTORLAB.md`: una App mínima privada, descubierta desde Dashboard_D, que demuestra clase → admisión → posición derivada → parámetro → vector → snapshot+delta.
 
 Regla: **Génesis entrega contexto; Continuity Core reconstruye/constituye la App; Commerce vendrá después como especialización.**
+
+
+## 27. Frontera canónica App → Core
+
+La claridad vigente está en `APP_BOUNDARY_AND_CORE_ENTRY.md`.
+
+`Genesis -> DashboardShell + UserDashboardConfig -> EnabledApps -> AppSelection | C_app -> ContinuityCore -> M_h -> AppUI`
+
+**Continuity Core comienza con la continuidad específica de una App.** Dashboard, login, tema y listado de Apps quedan fuera del núcleo.
+
+Siguiente foco:
+
+`EntityKindDefinition -> EntityAdmission -> ConstitutiveOrder -> ParameterDefinition -> Assignment/Fold -> LogicalVector`.
