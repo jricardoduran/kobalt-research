@@ -144,3 +144,20 @@ Relación nominal que ofrece candidatos. No es autoridad ni Current.
 - La autoridad constituye; la View revela; la Source ofrece candidatos; el Storage retiene; la matemática verifica; la Projection decide qué realidad entregamos.
 - MaterialValid != Authorized != Current.
 - Si la fuente no necesita ser pública, Keyed es el default preferido; Clear debe responder a una finalidad pública concreta.
+
+
+### LeastNecessaryAudience
+Audiencia mínima suficiente para que una realidad cumpla su función. Debe decidirse antes de seleccionar View.
+
+### DisclosureAsymmetry
+Asimetría por la cual una divulgación a una audiencia mayor no puede deshacerse, mientras que una fuente restringida puede producir posteriormente derivados más abiertos.
+
+### PublicByPurpose
+Condición positiva según la cual la historia/material completo de una realidad está destinado a audiencia pública; solo entonces `Clear` es un default natural para esa realidad.
+
+## Frases canónicas adicionales
+
+- La privacidad conserva opciones; la publicidad consume opciones.
+- De restringido a público derivamos; de público a privado no restauramos secreto.
+- Clear debe ser una decisión de propósito, no una costumbre técnica.
+- Causa restringida, consecuencia compartida por propósito.
