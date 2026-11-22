@@ -94,3 +94,34 @@ Núcleo mínimo que sabe verificar material, seguir refs e interpretar el metale
 - La App concreta es el conjunto de contratos vigentes de su continuidad.
 - El orden causal es un DAG; solo introducir orden total donde tenga significado.
 - Commerce especializa Continuity Core.
+
+### WriteLocal
+Capacidad de un nodo para append a su propia trayectoria. No constituye realidad compartida.
+
+### Proposer
+Actor autorizado a presentar una propuesta para evaluación.
+
+### WriteAuthority / ConstitutiveAuthority
+Contrato/causas que determinan quién puede constituir cambios legítimos en una continuidad.
+
+### PublicationAuthority
+Quién puede producir/actualizar un derivado para una audiencia.
+
+### ReadAudience
+Conjunto de actores que deben poder reconstruir una realidad o derivado.
+
+### ProjectionPolicy
+Regla semántica que determina qué parte de una fuente se convierte en un derivado autocontenido.
+
+### PhysicalWrite
+Capacidad de escribir bytes en un Storage. No equivale a autoridad semántica.
+
+### Regime(X)
+Par conceptual `(WriteAuthority(X), ReadAudience(X))`; KOB2 materializa el eje de lectura mediante `Clear` o `Keyed(d)`, mientras Authority gobierna la escritura constitutiva.
+
+## Frases canónicas adicionales
+
+- La escritura converge; la lectura irradia.
+- PhysicalWrite != ConstitutiveWrite.
+- ReadableDerivative != ReadableSource.
+- El régimen emerge de las preguntas, no se predefine.
