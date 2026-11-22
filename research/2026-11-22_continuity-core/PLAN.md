@@ -65,3 +65,8 @@ Toda probeta nueva debe etiquetar sus flujos con estas respuestas.
 ## Política transversal — privacidad constitutiva por defecto
 
 No asumir `Clear` como estado inicial por costumbre. Para cada continuidad fuente preguntar si su historia completa necesita audiencia pública. Si no, preferir `Keyed(d_domain)` y exponer información mediante derivados con ProjectionPolicy explícita. Esta política debe verificarse en las probetas de KOB2.
+
+
+## Regla transversal — audiencia mínima
+
+Bajo incertidumbre razonable, no usar `Clear` por costumbre. Elegir la audiencia mínima que cumple la función de la fuente; ampliar acceso mediante `Projection -> Clear/Keyed(d_group)`. Verificar explícitamente que ningún flujo amplíe la audiencia de la fuente cuando basta un derivado.
