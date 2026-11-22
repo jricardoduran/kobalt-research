@@ -70,3 +70,21 @@ No asumir `Clear` como estado inicial por costumbre. Para cada continuidad fuent
 ## Regla transversal — audiencia mínima
 
 Bajo incertidumbre razonable, no usar `Clear` por costumbre. Elegir la audiencia mínima que cumple la función de la fuente; ampliar acceso mediante `Projection -> Clear/Keyed(d_group)`. Verificar explícitamente que ningún flujo amplíe la audiencia de la fuente cuando basta un derivado.
+
+
+## Foco inmediato — mecanismos estructurales de una App
+
+La probeta P0 parte directamente de `C_app`; Génesis/Dashboard se consideran contexto resuelto.
+
+Orden de investigación:
+
+1. definir una clase de entidad;
+2. admitir identidades de esa clase;
+3. derivar su orden/posición estable;
+4. definir parámetros sobre la clase;
+5. constituir assignments y su fold;
+6. derivar vectores lógicos alineados por posición;
+7. comparar representaciones dense/sparse/bitmap/fixed-width;
+8. introducir relaciones entre parámetros.
+
+No avanzar a Commerce hasta que estos mecanismos sean independientes del vocabulario de negocio.
