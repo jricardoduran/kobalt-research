@@ -2,7 +2,7 @@
 
 **Fecha:** 2026-11-22
 
-> **La posición de una entidad en una tabla estable no se declara como dato independiente. Emerge determinísticamente del orden constitutivo reconocido al recorrer la continuidad.**
+> **La posición de una entidad no se declara como dato independiente. Emerge determinísticamente del **orden constitutivo canónico de las admisiones de esa clase dentro de la continuidad**.**
 
 `Position = Consequence(ConstitutiveOrder)`
 
@@ -20,7 +20,7 @@
 
 ## Ejemplo
 
-Si el orden constitutivo reconocido de Product es:
+Si la continuidad induce para las admisiones Product el orden constitutivo:
 
 `P_A, P_B, P_C, P_D`
 
@@ -44,7 +44,7 @@ Si dos admisiones no tienen suficiente relación para inducir un orden único de
 
 No se protege una asignación redundante de slot. Se protege:
 
-`CheckHead(T_K,h) + Append(EntityAdmitted(E))`
+`CheckHead(Order_K,h) + Append(EntityAdmitted(E))`
 
 como transición lógica cuando esa trayectoria produce posiciones.
 
@@ -73,3 +73,11 @@ y puede descartarse y reconstruirse.
 ## Regla de diseño
 
 Persistir la causa mínima suficiente; derivar la consecuencia. No duplicar como hecho aquello que ya está matemáticamente determinado por la continuidad.
+
+## Terminología estable
+
+La cadena conceptual es:
+
+`Continuity -> constitutive admissions of K + canonical order -> derived sequence S_K -> derived position -> materialized table T_K`.
+
+Evitar `orden de la tabla` como origen del slot: la tabla es una materialización posterior.
