@@ -360,3 +360,12 @@ Frase guía:
 **La escritura converge hacia la fuente; la lectura irradia desde la fuente mediante derivados.**
 
 La View se elige a partir de la audiencia; Authority se elige a partir del efecto que se quiere constituir.
+
+
+## 24. Ontología relacional y algoritmo de diseño
+
+La definición canónica de Authority, View, Source, Storage, Verification, Projection y Audience por sus relaciones está en `RELATIONAL_ONTOLOGY.md`.
+
+El procedimiento obligatorio para diseñar nuevos flujos/regímenes está en `FLOW_DESIGN_ALGORITHM.md`.
+
+Política recomendada: **una continuidad constitutiva que no tenga propósito público explícito se materializa preferentemente bajo `Keyed(d_domain)`; las audiencias externas reciben derivados específicos bajo `Clear` o `Keyed(d_group)`.**
