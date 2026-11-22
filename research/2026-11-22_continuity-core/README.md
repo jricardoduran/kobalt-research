@@ -347,3 +347,16 @@ La comparación entre substrate limpio y substrate KOB2, el lugar de K5.1, cifra
 `KOB2_INTEGRATION.md`.
 
 La recomendación vigente es mantener **Clean Core** y **KOB2-backed Core** como dos realizaciones del mismo modelo semántico y compararlas mediante probetas diferenciales.
+
+
+## 23. Lectura, escritura, audiencia y autoridad
+
+La doctrina canónica que separa `WriteAuthority`, `ReadAudience`, `Projection` y `View` está en:
+
+`READ_WRITE_AUDIENCE_MODEL.md`.
+
+Frase guía:
+
+**La escritura converge hacia la fuente; la lectura irradia desde la fuente mediante derivados.**
+
+La View se elige a partir de la audiencia; Authority se elige a partir del efecto que se quiere constituir.
