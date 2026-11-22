@@ -339,3 +339,11 @@ Volver a Commerce cuando Product, Sale, Price, Quantity, Description, Tax, Image
 **El orden causal es un DAG; solo imponer orden total cuando una semántica lo exige.**
 
 **Commerce es una aplicación de Continuity Core, no la definición de Continuity Core.**
+
+## 22. Integración KOB2
+
+La comparación entre substrate limpio y substrate KOB2, el lugar de K5.1, cifrado privado, proyección pública y tensiones con mecanismos históricos está en:
+
+`KOB2_INTEGRATION.md`.
+
+La recomendación vigente es mantener **Clean Core** y **KOB2-backed Core** como dos realizaciones del mismo modelo semántico y compararlas mediante probetas diferenciales.
