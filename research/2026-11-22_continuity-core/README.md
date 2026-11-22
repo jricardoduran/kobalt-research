@@ -369,3 +369,10 @@ La definición canónica de Authority, View, Source, Storage, Verification, Proj
 El procedimiento obligatorio para diseñar nuevos flujos/regímenes está en `FLOW_DESIGN_ALGORITHM.md`.
 
 Política recomendada: **una continuidad constitutiva que no tenga propósito público explícito se materializa preferentemente bajo `Keyed(d_domain)`; las audiencias externas reciben derivados específicos bajo `Clear` o `Keyed(d_group)`.**
+
+
+## 25. Asimetría de divulgación
+
+La regla canónica sobre audiencia mínima, privacidad por defecto y derivación hacia afuera está en `DISCLOSURE_ASYMMETRY.md`.
+
+Principio: **la privacidad conserva opciones; la publicidad consume opciones**. Una fuente constitutiva usa la audiencia mínima necesaria y las audiencias mayores reciben derivados específicos.
