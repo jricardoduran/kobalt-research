@@ -45,3 +45,18 @@ Si en Commerce aparece una necesidad general, volver a Continuity Core, definirl
 **Track B — KOB2-backed:** KOB2 9.0.1 + mecanismos revisados + Record/Chunk + Continuity Core.
 
 Ambos deben recibir fixtures semánticos equivalentes y producir las mismas secuencias, posiciones, vectores y proyecciones. Las diferencias de bytes/codec son aceptables; las diferencias semánticas no.
+
+
+## Prueba transversal Audience/Authority
+
+Antes de especializar cualquier flujo, responder explícitamente:
+
+1. ¿quién puede proponer?;
+2. ¿quién puede constituir?;
+3. ¿quién necesita leer qué parte?;
+4. ¿fuente o derivado?;
+5. ¿Clear o Keyed(d_group)?;
+6. ¿quién puede publicar el derivado?;
+7. ¿quién solo puede escribir bytes sin autoridad semántica?
+
+Toda probeta nueva debe etiquetar sus flujos con estas respuestas.
