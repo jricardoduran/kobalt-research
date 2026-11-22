@@ -276,3 +276,42 @@ Y en sentido de lectura:
 **Un derivado no concede acceso a la continuidad fuente: constituye otra realidad deliberadamente más pequeña para otra audiencia.**
 
 **El adaptador mantiene KOB2 y Continuity Core autónomos.**
+---
+
+## 16. Derivado de red no es canal de autoridad
+
+Para afiliados/vendedores:
+
+`C_private -> ProjectionPolicy_net -> D_net -> Keyed(d_net)`.
+
+Los miembros de la red reconstruyen `D_net` para conocer productos/ofertas permitidas.
+
+Si un miembro quiere vender, su acción nace como propuesta en su propio ámbito/trajectory:
+
+`Gamma_affiliate -> SaleRequest(ProductRef,Quantity,...) -> Authority_private`.
+
+La autoridad privada evalúa y, si corresponde, constituye el efecto en `C_private`.
+
+Después una nueva proyección de red refleja el estado actualizado.
+
+Por tanto:
+
+`ReadSharedDerivative != WriteSourceContinuity`
+
+y:
+
+`SharedView != SharedAuthority`.
+
+Esto preserva colaboración sin entregar la capacidad de evolución de la continuidad fuente a todos los poseedores de `d_net`.
+
+## 17. Terminología de clave
+
+`Keyed(d)` usa secreto simétrico compartido. No llamarlo `clave pública` en sentido criptográfico asimétrico.
+
+Usar:
+
+- `d_private`: secreto privado del ámbito;
+- `d_net`: secreto compartido por miembros de una red;
+- `Clear`: sin secreto de lectura.
+
+Si `d_net` es conocida por todos los miembros, todos ellos pueden evaluar el mundo de red; eso es una decisión de audiencia, no una prueba de autoridad individual.
