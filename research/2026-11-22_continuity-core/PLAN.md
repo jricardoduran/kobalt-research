@@ -60,3 +60,8 @@ Antes de especializar cualquier flujo, responder explícitamente:
 7. ¿quién solo puede escribir bytes sin autoridad semántica?
 
 Toda probeta nueva debe etiquetar sus flujos con estas respuestas.
+
+
+## Política transversal — privacidad constitutiva por defecto
+
+No asumir `Clear` como estado inicial por costumbre. Para cada continuidad fuente preguntar si su historia completa necesita audiencia pública. Si no, preferir `Keyed(d_domain)` y exponer información mediante derivados con ProjectionPolicy explícita. Esta política debe verificarse en las probetas de KOB2.
