@@ -125,3 +125,22 @@ Par conceptual `(WriteAuthority(X), ReadAudience(X))`; KOB2 materializa el eje d
 - PhysicalWrite != ConstitutiveWrite.
 - ReadableDerivative != ReadableSource.
 - El régimen emerge de las preguntas, no se predefine.
+
+
+### MathematicalVerification
+Prueba reproducible de que un candidato corresponde materialmente al contexto esperado (View, Name, commitment, descriptor, contratos). Sustituye confianza en el Storage, no Authority.
+
+### MaterialValid
+Candidato que pasa verificaciones materiales. No implica `Authorized` ni `Current`.
+
+### PreferredView
+Política de materialización elegida después de conocer audiencia/finalidad. Para fuentes constitutivas no públicas, preferencia actual: `Keyed(d_domain)`.
+
+### Source
+Relación nominal que ofrece candidatos. No es autoridad ni Current.
+
+## Frases canónicas adicionales
+
+- La autoridad constituye; la View revela; la Source ofrece candidatos; el Storage retiene; la matemática verifica; la Projection decide qué realidad entregamos.
+- MaterialValid != Authorized != Current.
+- Si la fuente no necesita ser pública, Keyed es el default preferido; Clear debe responder a una finalidad pública concreta.
