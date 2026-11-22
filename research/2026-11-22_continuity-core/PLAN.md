@@ -37,3 +37,11 @@ Construir registrador de producto, catálogo y POS como preguntas/propuestas sob
 Si en Commerce aparece una necesidad general, volver a Continuity Core, definirla/probarla allí y luego reutilizarla.
 
 > **Primero demostrar la gramática general; después escribir el vocabulario de Comercio.**
+
+## Dos tracks de implementación experimental
+
+**Track A — Clean Core:** bootstrap mínimo propio + Record/K5 + persistencia local.
+
+**Track B — KOB2-backed:** KOB2 9.0.1 + mecanismos revisados + Record/Chunk + Continuity Core.
+
+Ambos deben recibir fixtures semánticos equivalentes y producir las mismas secuencias, posiciones, vectores y proyecciones. Las diferencias de bytes/codec son aceptables; las diferencias semánticas no.
