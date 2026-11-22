@@ -376,3 +376,12 @@ Política recomendada: **una continuidad constitutiva que no tenga propósito p�
 La regla canónica sobre audiencia mínima, privacidad por defecto y derivación hacia afuera está en `DISCLOSURE_ASYMMETRY.md`.
 
 Principio: **la privacidad conserva opciones; la publicidad consume opciones**. Una fuente constitutiva usa la audiencia mínima necesaria y las audiencias mayores reciben derivados específicos.
+
+
+## 26. Génesis → Continuity Core
+
+El flujo canónico desde `Génesis · Creador de Mundos V3.1.8` hacia una continuidad de App está en `GENESIS_TO_CONTINUITY_FLOW.md`.
+
+La primera probeta general está en `PROBE_P0_VECTORLAB.md`: una App mínima privada, descubierta desde Dashboard_D, que demuestra clase → admisión → posición derivada → parámetro → vector → snapshot+delta.
+
+Regla: **Génesis entrega contexto; Continuity Core reconstruye/constituye la App; Commerce vendrá después como especialización.**
