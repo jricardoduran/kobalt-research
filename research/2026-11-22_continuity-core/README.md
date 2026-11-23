@@ -382,9 +382,9 @@ Principio: **la privacidad conserva opciones; la publicidad consume opciones**. 
 
 El flujo canónico desde `Génesis · Creador de Mundos V3.1.8` hacia una continuidad de App está en `GENESIS_TO_CONTINUITY_FLOW.md`.
 
-La primera probeta general está en `PROBE_P0_VECTORLAB.md`: una App mínima privada, descubierta desde Dashboard_D, que demuestra clase → admisión → posición derivada → parámetro → vector → snapshot+delta.
+La primera probeta general está en `PROBE_P0_VECTORLAB.md`: parte directamente de `C_app` y demuestra clase → admisión → posición derivada → parámetro → vector → snapshot+delta.
 
-Regla: **Génesis entrega contexto; Continuity Core reconstruye/constituye la App; Commerce vendrá después como especialización.**
+Regla vigente: **Génesis entrega contexto; Dashboard selecciona; Continuity Core comienza en la continuidad específica de la App.**
 
 
 ## 27. Frontera canónica App → Core
@@ -398,3 +398,17 @@ La claridad vigente está en `APP_BOUNDARY_AND_CORE_ENTRY.md`.
 Siguiente foco:
 
 `EntityKindDefinition -> EntityAdmission -> ConstitutiveOrder -> ParameterDefinition -> Assignment/Fold -> LogicalVector`.
+
+## 28. App autocontenida y biblioteca mínima
+
+La doctrina de una sola continuidad por App está en `SELF_DESCRIBING_APP_CONTINUITY.md`.
+
+La UI mínima para entidades/elementos/parámetros/valores está en `ENTITY_PARAMETER_UI_LIBRARY.md`.
+
+Los tipos de parámetros, evoluciones y relaciones iniciales están en `PARAMETER_RELATION_LIBRARY.md`.
+
+Síntesis:
+
+`C_app -> Interpret -> (K_h,S_h) -> Project -> M_h`
+
+**Entidades dan coordenadas; parámetros dan dimensiones; hechos dan historia; relaciones dan coherencia.**
