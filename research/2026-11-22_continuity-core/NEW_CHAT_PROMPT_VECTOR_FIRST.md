@@ -92,3 +92,23 @@ Para cada flujo identifica solo:
 Busca reducir, no añadir. Si algo no es necesario para que el mecanismo funcione, déjalo fuera.
 
 Al final quiero una gramática mínima suficientemente precisa para que después podamos escribir una probeta HTML+JS local-first sin tomar nuevas decisiones arquitectónicas importantes.
+
+## Precisión que debe repetirse al empezar
+
+La geometría natural no surge de convertir objetos a vectores.
+
+[
+\boxed{
+\text{constitución}
+\rightarrow
+\text{coordenada}
+\rightarrow
+\text{vector}
+\rightarrow
+\text{proyección}
+}
+]
+
+La posición producida por la trayectoria/continuidad es información estructural. Los parámetros deben aprovecharla y no repetir identidades innecesariamente.
+
+Authority legitima qué entra a la continuidad; el orden constitutivo determina la coordenada. JSON no participa en esa autoridad.
