@@ -805,3 +805,59 @@ Para cambio:
 **La autoridad constituye causas; las proyecciones entregan consecuencias a cada audiencia; la View controla quién puede evaluar esa materialidad.**
 
 **Primero demostrar la gramática general; después escribir el vocabulario de cada App.**
+
+---
+
+## 40. Geometría vectorial primaria
+
+Precisión prioritaria incorporada después de la consolidación inicial:
+
+**Continuity Core debe aprovechar la coordenada que la propia constitución histórica ya produce.**
+
+No partimos de JSON/objetos para convertirlos a vectores. La dirección causal/operacional es:
+
+[
+\boxed{
+\bigsqcup_n\Gamma_n
+\rightarrow
+C_h
+\rightarrow
+\mathbb V_h
+\rightarrow
+\{JSON,Table,SQL,UI,API,Catalog,Index,Snapshot\}
+}
+]
+
+Para cada entidad:
+
+[
+S_K=[E_0,E_1,\ldots]
+]
+
+y cada parámetro:
+
+[
+V_A[i]=CurrentValue(S_K[i],A).
+]
+
+La posición no se escribe como atributo si el orden constitutivo la determina. La posición es información estructural.
+
+La fuente causal sigue siendo (C_h), no el vector cacheado:
+
+[
+C_h\neq\mathbb V_h.
+]
+
+Pero la materialización operacional natural es vectorial:
+
+[
+\boxed{
+\text{continuidad = causas/significado;}
+\quad
+\text{vectores = actualidad;}
+\quad
+\text{JSON/SQL/UI = vistas.}
+}
+]
+
+Authority legitima incorporación; el orden constitutivo induce coordenadas. No confundir coordinate con Authority.
