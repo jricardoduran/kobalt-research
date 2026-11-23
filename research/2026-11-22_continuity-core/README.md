@@ -437,3 +437,17 @@ Reglas:
 - local-first: toda acción nace como evidencia local y toda lectura interpreta evidencia local reconocida.
 
 La primera probeta ejecutable asociada es `2026-11-22_2028_continuity_vector_lab_v1.html`.
+
+## 31. Canon simple vector-first
+
+`VECTOR_FIRST_SIMPLE_CANON.md` es el punto de entrada vigente para continuar el diseño con mínima complejidad.
+
+Prioridad conceptual:
+
+`⊔ Γ_n -> C_h -> 𝕍_h -> proyecciones`.
+
+JSON, SQL, tablas y objetos de dominio dejan de ser estructuras primarias. Se derivan del estado vectorial.
+
+`NEW_CHAT_PROMPT_VECTOR_FIRST.md` contiene un prompt de reinicio para continuar en un chat nuevo sin arrastrar complejidad histórica.
+
+**Si una formulación anterior contradice este canon por introducir representación innecesaria, preferir el canon vector-first y revisar la discrepancia explícitamente.**
