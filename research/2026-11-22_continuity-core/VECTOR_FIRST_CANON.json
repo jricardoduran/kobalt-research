@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "canonical_date": "2026-11-23",
+  "status": "canonical-vector-first",
+  "title": "Kobalt Continuity Core — Canon vectorial",
+  "priority_statement": "La trayectoria/continuidad constituida genera coordenadas estables; el estado operacional natural es vectorial; JSON, tablas, SQL, APIs y UI son proyecciones derivadas.",
+  "authority": {
+    "causal_source": "C_h — continuidad constituida/reconocida desde trayectorias locales y decisiones de Authority",
+    "local_evidence": "Γ_n — trayectoria local append-only de cada nodo",
+    "not_authority": [
+      "JSON",
+      "SQL",
+      "table",
+      "object document",
+      "UI",
+      "snapshot",
+      "index",
+      "vector cache"
+    ],
+    "rule": "La posición no concede Authority por sí sola; Authority legitima la incorporación y el orden constitutivo produce la coordenada."
+  },
+  "geometry": {
+    "trajectory": {
+      "form": "Γ_n=(r_0,r_1,...,r_m)",
+      "coordinate": "i = posición del record dentro de Γ_n",
+      "property": "La posición es información estructural y no necesita repetirse como campo si la trayectoria la determina inequívocamente."
+    },
+    "entity_base": {
+      "form": "S_K=[E_0,E_1,...,E_n]",
+      "coordinate": "pos_K(E_i)=i",
+      "source": "orden constitutivo reconocido de las admisiones de K",
+      "property": "La base de entidad es derivada de C_h y conserva coordenadas estables bajo extensión por prefijo cuando el contrato así lo establece."
+    },
+    "parameter_vector": {
+      "form": "A:K⇀D_A",
+      "vector": "V_A[i]=CurrentValue(S_K[i],A)",
+      "property": "El parámetro reutiliza la coordenada ya dada por S_K; no repite identidad por cada valor."
+    }
+  },
+  "vector_state": {
+    "form": "𝕍_h=({S_K},{P_K},{V_A},R_h)",
+    "role": "materialización operacional primaria derivada de C_h",
+    "authority": false,
+    "reconstructible": true,
+    "incremental_law": "FoldVectorDelta(FoldVectors(C_h),ΔC)=FoldVectors(C_h')"
+  },
+  "universal_grammar": [
+    "DefineEntity",
+    "DefineParameter",
+    "DefineRelation",
+    "AdmitEntity",
+    "Assign"
+  ],
+  "key_flows": {
+    "define_entity": "DefineEntity(K,label) -> C_h' -> S_K exists",
+    "define_parameter": "DefineParameter(A,K,D_A,F_A) -> C_h' -> V_A exists logically over S_K",
+    "admit_entity": "AdmitEntity(K,E) -> C_h' -> S_K extends -> new coordinate emerges",
+    "assign": "Assign(E,A,v) -> C_h' -> i=pos_K(E) -> V_A[i]=v",
+    "project": "𝕍_h -> Projection_X -> X",
+    "local_to_continuity": "Action -> Γ_n@(n,i) -> Authority -> C_h' -> FoldVectorDelta -> 𝕍_h'"
+  },
+  "projections": {
+    "json": "JSON(E_i)=Serialize({A -> V_A[i] | V_A[i]≠⊥})",
+    "table": "Table_K[i,j]=V_{A_j}[i]",
+    "sql": "SQL_K=Materialize(S_K,{V_A})",
+    "other": [
+      "UI",
+      "API",
+      "Catalog",
+      "SearchIndex",
+      "Snapshot",
+      "Bitmap",
+      "DerivedIndex"
+    ]
+  },
+  "principles": [
+    "La trayectoria constituye coordenadas.",
+    "La continuidad conserva significado y causas.",
+    "Los vectores conservan operacionalmente la actualidad.",
+    "Las demás estructuras son vistas.",
+    "Una entidad no es un objeto con campos: es una identidad dentro de una base; sus campos son valores de vectores de parámetros en esa coordenada.",
+    "Position = Consequence(ConstitutiveOrder).",
+    "Identity != Position.",
+    "JSON != Authority.",
+    "VectorState != CausalAuthority.",
+    "Persist causes; derive reproducible consequences."
+  ],
+  "falsification": [
+    "Crear una entidad requiere schema JSON.",
+    "Crear un elemento obliga a escribir null para todos los parámetros.",
+    "Añadir un parámetro obliga a migrar/rewrite elementos previos.",
+    "JSON o SQL son necesarios para interpretar C_h.",
+    "Una posición se trata como identidad o Authority fuera de su contexto/base.",
+    "Una proyección derivada se convierte en segunda fuente soberana.",
+    "Se repite identidad en cada valor aunque la coordenada ya la determina."
+  ]
+}
