@@ -412,3 +412,11 @@ Síntesis:
 `C_app -> Interpret -> (K_h,S_h) -> Project -> M_h`
 
 **Entidades dan coordenadas; parámetros dan dimensiones; hechos dan historia; relaciones dan coherencia.**
+
+## 29. Especificación consolidada
+
+`CONTINUITY_CORE_CONSOLIDATED.md` es la lectura corrida y canónica del modelo vigente.
+
+Integra frontera del Core, App autocontenida, entidades, parámetros, posiciones, vectores, relaciones, autoridad, local-first, Source/Storage, audiencia/View, proyecciones, incrementalidad y probetas.
+
+**Usar este documento como punto de entrada antes de consultar notas especializadas.**
