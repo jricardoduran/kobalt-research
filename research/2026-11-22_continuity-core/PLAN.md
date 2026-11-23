@@ -105,3 +105,22 @@ Probetas siguientes:
 8. generación automática de formularios/tablas desde contratos.
 
 No separar schema y datos en continuidades distintas salvo que aparezca una realidad causal verdaderamente independiente.
+
+## Reinicio de trabajo — vector-first simple
+
+No escribir nueva probeta hasta congelar los flujos mínimos desde `VECTOR_FIRST_SIMPLE_CANON.md`.
+
+Orden:
+
+1. `DefineEntity -> S_K`;
+2. `DefineParameter -> V_A`;
+3. `AdmitEntity -> extend S_K`;
+4. `Assign -> delta de una coordenada`;
+5. `Invariant/Reference`;
+6. `Fold/Derived`;
+7. `Γ_n -> Authority -> C_h` sin duplicar causa;
+8. `C_h -> 𝕍_h` incremental;
+9. proyectar Table/JSON solo para demostrar que son derivaciones;
+10. recién después implementar HTML+JS.
+
+Objetivo de reducción: que la implementación no necesite un objeto JSON de producto, schema JSON ni tabla canónica.
