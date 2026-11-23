@@ -420,3 +420,20 @@ Síntesis:
 Integra frontera del Core, App autocontenida, entidades, parámetros, posiciones, vectores, relaciones, autoridad, local-first, Source/Storage, audiencia/View, proyecciones, incrementalidad y probetas.
 
 **Usar este documento como punto de entrada antes de consultar notas especializadas.**
+
+## 30. Trayectorias locales → continuidad → vectores
+
+La especificación de implementación está en `VECTOR_LOCAL_CONTINUITY_FLOWS.md`.
+
+Flujo canónico:
+
+`Action -> Proposal -> Γ_n -> Authority -> Decision -> Γ_A -> C_app -> positions/vectors/materializations`.
+
+Reglas:
+
+- `Γ_n != Γ_A != C_app`;
+- la continuidad no es una trayectoria global;
+- las posiciones/vectores se derivan de C, no del orden físico de IndexedDB;
+- local-first: toda acción nace como evidencia local y toda lectura interpreta evidencia local reconocida.
+
+La primera probeta ejecutable asociada es `2026-11-22_2028_continuity_vector_lab_v1.html`.
