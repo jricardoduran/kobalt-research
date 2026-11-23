@@ -542,3 +542,115 @@ El diseño falla si:
 Donde X puede ser JSON, SQL, Table, UI, API, Catalog, SearchIndex o Snapshot.
 
 **JSON deja de ser arquitectura y vuelve a ser lo que siempre debió ser: una representación opcional.**
+
+---
+
+## 29. Precisión prioritaria — la trayectoria constituye coordenadas
+
+Esta regla tiene prioridad conceptual y debe repetirse deliberadamente:
+
+[
+\boxed{\text{la trayectoria/continuidad constituida genera coordenadas}}
+]
+
+No tomamos objetos tradicionales y luego los convertimos a vectores por optimización.
+
+El flujo correcto es:
+
+[
+\boxed{
+\text{constitución}
+\rightarrow
+\text{posición estable}
+\rightarrow
+\text{vectores}
+\rightarrow
+\text{representaciones}
+}
+]
+
+En una trayectoria local:
+
+[
+\Gamma_n=(r_0,r_1,\ldots,r_m)
+]
+
+la posición (i) ya expresa orden local. No es metadata decorativa.
+
+En una entidad (K), las admisiones constituidas producen:
+
+[
+S_K=[E_0,E_1,\ldots,E_n]
+]
+
+y:
+
+[
+pos_K(E_i)=i.
+]
+
+Los parámetros reutilizan esas coordenadas:
+
+[
+V_A[i]=CurrentValue(S_K[i],A).
+]
+
+Por tanto, no hay que repetir la identidad (E_i) en cada valor cuando la base/corte están fijados.
+
+La precisión sobre autoridad es:
+
+[
+\boxed{
+\text{Authority legitima la incorporación;}
+\quad
+\text{el orden constitutivo produce la coordenada.}
+}
+]
+
+La posición sola no concede Authority, pero una vez constituido el hecho su posición es parte de la información estructural.
+
+## 30. Representación real vs representaciones derivadas
+
+La geometría operacional natural es:
+
+[
+\boxed{
+\text{bases ordenadas} + \text{vectores alineados}
+}
+]
+
+y no un conjunto de objetos JSON.
+
+El estado operacional:
+
+[
+\mathbb V_h=(\{S_K\},\{P_K\},\{V_A\},R_h).
+]
+
+Después:
+
+[
+\mathbb V_h\rightarrow JSON
+]
+
+[
+\mathbb V_h\rightarrow Table
+]
+
+[
+\mathbb V_h\rightarrow SQL
+]
+
+[
+\mathbb V_h\rightarrow UI/API/Catalog/Index.
+]
+
+Por tanto:
+
+**JSON no es una estructura intermedia obligatoria.**
+
+**JSON es una serialización opcional de una sección vectorial.**
+
+Regla de no-regresión:
+
+> Si una implementación empieza a tratar JSON, una tabla SQL o un objeto de dominio como la representación soberana, volver a (C_h\rightarrow\mathbb V_h\rightarrow Projection).
