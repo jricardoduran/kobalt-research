@@ -124,3 +124,14 @@ Orden:
 10. recién después implementar HTML+JS.
 
 Objetivo de reducción: que la implementación no necesite un objeto JSON de producto, schema JSON ni tabla canónica.
+
+## Regla de no-regresión — posición como información
+
+Toda nueva probeta debe demostrar explícitamente:
+
+1. la incorporación constituida produce una coordenada sin guardar `position` como atributo redundante cuando el storage/contrato ya la determina;
+2. `S_K` emerge de admisiones constituidas;
+3. `V_A` reutiliza las coordenadas de `S_K`;
+4. JSON/Table/SQL se generan desde `𝕍_h`, nunca son entrada soberana;
+5. borrar una proyección no impide reconstruirla;
+6. Authority y posición permanecen separadas: Authority legitima, orden constitutivo coordina.
