@@ -1,339 +1,544 @@
-# Vector Core — flujos locales, trayectorias y continuidad
+# Vector Core — trayectorias locales, continuidad y vectores (versión simple)
 
-**Fecha:** 2026-11-22
-**Estado:** especificación de implementación de la primera probeta ejecutable.
+**Fecha:** 2026-11-23
+**Estado:** versión canónica vigente de los flujos locales. Sustituye la formulación anterior basada en records con payload JSON-like.
 
 ## 0. Tesis
 
-Continuity Core debe distinguir tres objetos aunque vivan en el mismo navegador:
+Continuity Core no necesita JSON, tablas ni una base de datos como ontología.
 
-`Γ_n` — trayectoria local append-only del nodo n.
+La forma mínima es:
 
-`Γ_A` — trayectoria local append-only de la Authority.
+`trayectorias locales -> autoridad/continuidad -> estado vectorial -> proyecciones`
 
-`C_app` — realidad constituida derivada de decisiones aceptadas; no es una trayectoria global.
+Formalmente:
+
+`⊔ Γ_n -> C_h -> 𝕍_h -> {UI, Table, JSON, SQL, API, Catalog, Index, Snapshot}`.
+
+JSON es una posible salida. No es un paso intermedio obligatorio.
+
+---
+
+## 1. Qué es irreducible
+
+El Core necesita conservar únicamente aquello que no puede reconstruirse exactamente:
+
+1. definiciones semánticas constituidas;
+2. admisiones de identidades;
+3. assignments/eventos no derivables;
+4. relaciones/decisiones de autoridad necesarias;
+5. causalidad mínima entre esos hechos.
+
+Todo estado reproducible es derivación.
 
 Regla:
 
-`Γ_n != Γ_A != C_app`.
-
-Una misma máquina puede alojar los tres sin fusionar sus responsabilidades.
+**Persistir causas y semántica irreducibles; derivar actualidad y representaciones.**
 
 ---
 
-## 1. Registro local
+## 2. Bootstrap universal mínimo
 
-Cada trayectoria contiene records encadenados:
-
-`R_n,k = (nodeId,seq,prevHash,kind,payload,hash)`.
-
-`hash = SHA256(canonical(record_without_hash))`.
-
-Leyes:
-
-`seq_(k+1)=seq_k+1`
-
-`prevHash_(k+1)=hash_k`.
-
-El hash detecta corrupción/truncación/coherencia material de la trayectoria; no crea Authority.
-
----
-
-## 2. Qué escribe un nodo
-
-Una acción humana/app no escribe C directamente.
-
-`Action -> Proposal(q) -> append Γ_n`.
-
-Ejemplos de propuesta:
+El runtime conoce una gramática universal pequeña:
 
 `DefineEntity`
 `DefineParameter`
 `DefineRelation`
 `AdmitEntity`
 `Assign`
-`Batch(facts)`.
 
-El Proposal guarda además el `observedRevision` de C para diagnóstico, pero Authority siempre evalúa contra su C actual.
+más tipos/evoluciones generales reconocidos.
 
----
+No conoce Product, Sale, Price, Stock, Task o Book.
 
-## 3. Qué escribe Authority
-
-Authority observa propuestas disponibles y resuelve:
-
-`Resolve_A(q,C_h) -> (ρ_q,ΔC)`.
-
-Primero persiste un record `Decision` en `Γ_A`.
-
-Decision aceptado contiene:
-
-`proposalHash, accepted=true, orderedFacts, baseRevision, newRevision`.
-
-Decision rechazado contiene:
-
-`proposalHash, accepted=false, reason, baseRevision, newRevision=baseRevision`.
-
-Así una respuesta puede ser durable aunque no cambie C.
+La App constituye esos nombres y significados usando la gramática universal.
 
 ---
 
-## 4. Cómo emerge continuidad
+## 3. Entidad: una base de identidades
 
-`C_app` se reconstruye desde los Decision aceptados de `Γ_A` cuya causa Proposal es verificable.
+Definir una entidad `K` crea una clase reconocida, no una tabla física.
 
-`C_h = Closure({orderedFacts(d) | d in Γ_A, d.accepted})`.
+`DefineEntity(K,label)`.
 
-`Γ_A` no es C porque Γ_A también contiene rechazos/respuestas y material operacional que no constituye realidad de App.
+Sus elementos constituidos forman una base ordenada:
 
-En esta probeta hay una sola Authority y su trayectoria aporta una fibra constitutiva lineal. Esto NO implica que toda continuidad general deba tener orden global total.
+`S_K = [E_0,E_1,...,E_n]`.
 
----
+La coordenada de un elemento es:
 
-## 5. Flujo local completo de escritura
+`pos_K(E_i)=i`.
 
-`UI action`
-` -> build Proposal`
-` -> append Proposal to Γ_n`
-` -> UI muestra Pending`
-` -> Authority lee q + reconstruye C_h`
-` -> valida definiciones/identidades/tipos/referencias`
-` -> resuelve invariantes/orden/guards`
-` -> append Decision to Γ_A`
-` -> si accepted, C_h -> C_h'`
-` -> reconstruir/FoldDelta M_h'`
-` -> UI muestra Accepted/Rejected`.
+Esta posición se deriva del orden constitutivo reconocido.
 
-Si Authority es remota, entre Γ_n y Γ_A aparecen transporte/importación; la semántica no cambia.
+**La posición es consecuencia, no un campo que se escribe.**
 
 ---
 
-## 6. Flujo local completo de lectura
+## 4. Parámetro: una dimensión sobre esa base
 
-`IndexedDB evidence`
-` -> verify each Γ hash-chain`
-` -> locate Authority Decisions`
-` -> verify proposal references`
-` -> constitute C_h from accepted decisions`
-` -> replay meta-state K_h`
-` -> replay domain S_h`
-` -> derive S_K and pos_K`
-` -> derive CurrentValue for each parameter`
-` -> derive logical vectors V_A`
-` -> evaluate derived/fold/state parameters`
-` -> materialize M_h`
-` -> project UI`.
+Un parámetro `A` de `K` se define una sola vez:
 
----
+`DefineParameter(A, host=K, valueType=D_A, evolution=F_A, label)`.
 
-## 7. Flujo DefineEntity
+Semánticamente:
 
-`CreateEntity(label)`
-` -> Proposal{facts:[DefineEntity(K,label)]}`
-` -> Γ_n`
-` -> Authority validates unique identity`
-` -> Decision accepted Γ_A`
-` -> C includes DefineEntity`
-` -> K_h includes K`
-` -> UI shows 0 elements / 0 parameters`.
+`A : K ⇀ D_A`.
+
+Definir A induce inmediatamente un vector lógico:
+
+`V_A[i] = CurrentValue(S_K[i],A)`.
+
+Si no existe valor para una coordenada:
+
+`V_A[i]=⊥`.
+
+No hace falta escribir físicamente esos `⊥`.
 
 ---
 
-## 8. Flujo DefineParameter
+## 5. Estado vectorial
 
-`AddParameter(K,label,valueType,evolution)`
-` -> Proposal DefineParameter(A,...)`
-` -> Γ_n`
-` -> Authority verifies K exists`
-` -> Decision Γ_A`
-` -> K_h includes A`
-` -> logical V_A immediately exists over current S_K`.
+El estado operacional natural del Core en un corte `h` es:
 
-If S_K=(E0,E1,E2):
+`𝕍_h = ({S_K}, {P_K}, {V_A}, R_h)`
 
-`V_A=[bottom,bottom,bottom]` until causes assign/derive values.
+donde:
 
----
+- `S_K` = base de identidades de cada entidad;
+- `P_K` = parámetros reconocidos para K;
+- `V_A` = vector actual de cada parámetro;
+- `R_h` = relaciones vigentes entre parámetros/entidades.
 
-## 9. Flujo CreateElement
+El metaestado también puede materializarse vectorialmente. No hace falta un documento de schema soberano.
 
-UI may submit one atomic proposal containing:
-
-`AdmitEntity(K,E)`
-`Assign(E,A1,v1)`
-`Assign(E,A2,v2)`
-`...`
-
-Authority resolves the batch, ensuring definitions/admission precede uses.
-
-After acceptance:
-
-`S_K' = S_K + E`
-
-`pos_K(E)=last derived coordinate` in this single-authority fiber.
-
-Existing positions remain stable.
+`Schema_h = ProjectDefinitions(C_h)`.
 
 ---
 
-## 10. Flujo SetValue / multi-edit
+## 6. Crear una entidad
 
-A single edit proposes one Assign.
+Acción humana:
 
-Editing several fields proposes a Batch of Assigns.
+`Crear entidad Producto`.
 
-Resolver classifies:
+Flujo:
 
-`Independent | Sequenciable(order) | AtomicBatch | Conflict | Invalid`.
+`local action -> propuesta DefineEntity(K_Product,'Producto') -> Γ_n -> Authority -> C_h' -> 𝕍_h'`.
 
-For invariant `Discount<=Price`, proposed `Price 100->70` and `Discount 80->60` is sequenced:
+Resultado operacional:
 
-`Discount->60 ; Price->70`.
+`S_Product=[]`
 
----
+`P_Product=[]`.
 
-## 11. Flujo Reference
-
-`Reference(TargetKind)` validates identity, not positional slot.
-
-Example:
-
-`ProductRef:Sale->Product`.
-
-`Assign(Sale0,ProductRef,P3)` requires P3 admitted in Product at evaluation cut.
-
-Materialization may encode `pos_Product(P3)` locally after scope/cut is known.
+No se crea JSON, tabla ni registro de producto.
 
 ---
 
-## 12. Flujo Fold/Derived vector
+## 7. Crear un parámetro
 
-Logical vectors share coordinates but not causality.
+Acción:
 
-`Assignment`: latest accepted Assign.
+`Añadir Precio : FixedPoint(2), Assignment`.
 
-`Derived`: reproducible function of current values.
+Flujo:
 
-`Fold`: reproducible fold over admitted source entities/events.
+`DefineParameter(A_Price,Product,FixedPoint(2),Assignment)`
+` -> Γ_n -> Authority -> C_h' -> 𝕍_h'`.
 
-`State`: transition-constrained current value.
+Si ya existen tres productos:
 
-All expose:
+`S_Product=[P0,P1,P2]`
+
+entonces lógicamente:
+
+`V_Price=[⊥,⊥,⊥]`.
+
+No se reescriben P0/P1/P2.
+
+---
+
+## 8. Crear un elemento
+
+Acción:
+
+`Nuevo producto`.
+
+El hecho irreducible inicial es:
+
+`AdmitEntity(Product,P3)`.
+
+Después:
+
+`S_Product'=[...,P3]`
+
+y:
+
+`pos_Product(P3)=|S_Product|-1`
+
+cuando el contrato constitutivo de esa base es extensión estable por prefijo.
+
+Todos los parámetros existentes adquieren conceptualmente una nueva coordenada `⊥`, sin escribirla.
+
+---
+
+## 9. Asignar un valor
+
+Acción:
+
+`Price(P3)=50000`.
+
+Hecho:
+
+`Assign(P3,A_Price,50000)`.
+
+El Core resuelve:
+
+`i=pos_Product(P3)`
+
+y actualiza la materialización:
+
+`V_Price[i]=50000`.
+
+La identidad `P3` pertenece a la causalidad; la coordenada `i` pertenece a la materialización.
+
+---
+
+## 10. El producto completo no es un objeto primario
+
+Una ficha de producto es una sección transversal de los vectores:
+
+`Section_K(i) = { A -> V_A[i] | A∈P_K, V_A[i]≠⊥ }`.
+
+Por tanto un producto actual puede verse como objeto, pero ese objeto es una proyección.
+
+Regla:
+
+**Una entidad no es un objeto con campos; es una identidad en una base, y sus campos son valores de dimensiones vectoriales en esa coordenada.**
+
+---
+
+## 11. JSON, tabla y SQL son proyectores
+
+JSON actual de un elemento:
+
+`JSON(E_i)=Serialize(Section_K(i))`.
+
+Tabla:
+
+`Table_K[i,j]=V_{A_j}[i]`.
+
+SQL/SQLite:
+
+`SQL_K = Materialize(S_K,{V_A})`.
+
+Catálogo, API, formulario, índices y reportes se derivan igual.
+
+Por eso:
+
+`JSON != Core`
+
+`Table != Core`
+
+`SQL != Core`.
+
+Son vistas del estado vectorial.
+
+---
+
+## 12. Nuevo elemento vs nuevo parámetro
+
+Simetría fundamental:
+
+`nuevo elemento -> extiende S_K`
+
+`nuevo parámetro -> extiende P_K y crea V_A`.
+
+Ninguna operación exige migrar las demás dimensiones.
+
+Si se añade `Material` después de 500 productos:
+
+`V_Material` existe lógicamente sobre las 500 coordenadas con `⊥` donde no hay valor.
+
+---
+
+## 13. Tipos y evolución
+
+ValueTypes iniciales:
+
+`Text | Boolean | Integer | FixedPoint | Enum | DateTime | Reference | BlobReference | Set | List`.
+
+Evolutions iniciales:
+
+`Assignment | Fold | Derived | State`.
+
+Separación obligatoria:
+
+`Value semantics != Evolution semantics != Physical codec`.
+
+Todos exponen la misma interfaz actual:
 
 `V_A[i]=CurrentValue(S_K[i],A)`.
 
 ---
 
-## 13. Sale -> Stock
+## 14. Referencias
 
-`Sale(ProductRef,Quantity)` is causal input.
+Una referencia semántica usa identidad:
 
-`Stock:Product->Integer` is Fold/Derived.
+`ProductRef : Sale -> Product`.
 
-General fold-by-reference profile:
+Una materialización local puede convertir después:
 
-`Stock(P)=Base(P)+Σ_j sign_j * Σ_{x in SourceKind_j, Ref_j(x)=P} Value_j(x)`.
+`ProductIdentity -> pos_Product(ProductIdentity)`.
 
-Sale term uses sign -1.
+Por tanto:
 
-Authority admission guard:
+`semantic reference != positional encoding`.
 
-`Stock_h(ProductRef(s)) >= Quantity(s)`.
-
-`CheckCurrentStock + AdmitSale` is one logical authority decision.
-
-No authoritative `stock -= q` record is emitted.
+Las posiciones solo pueden usarse cuando el contexto/base/corte que les da significado está fijado.
 
 ---
 
-## 14. Local-first/network
+## 15. Relaciones como álgebra sobre vectores
 
-Local creation:
+### Invariant
 
-`Action -> Γ_n local first`.
+Precio/descuento:
 
-Remote authority:
+`∀i: V_Discount[i]=⊥ OR 0<=V_Discount[i]<=V_Price[i]`.
 
-`Γ_n proposal -> outbox -> transport -> Authority local evidence -> Decision Γ_A -> transport -> verify -> persist local -> reconstruct C`.
+Una propuesta multi-cambio se acepta solo si existe una resolución válida (`Independent`, `Sequenciable`, `AtomicBatch`, etc.).
 
-Local authority probe:
+### Derivation/Fold
 
-transport collapses to an in-process handoff, but both trajectories remain separate.
+Ventas:
 
----
+`V_ProductRef^Sale`
+`V_Quantity^Sale`.
 
-## 15. Multi-node evidence
+Stock puede derivarse:
 
-A local browser may possess records from several trajectories:
+`V_Stock = V_Opening + V_Inputs - FoldByRef(V_ProductRef^Sale,V_Quantity^Sale) + V_Returns`.
 
-`E_local = ⨿ Γ_n`.
-
-This is evidence, not continuity.
-
-Continuity is computed only after Recognition + Authority semantics:
-
-`E_local -> Recognize -> ResolveAuthority -> C_h`.
-
-Thus importing arbitrary valid trajectory records does not grant them constitutive power.
+No se escribe un segundo hecho `stock -= q`.
 
 ---
 
-## 16. Failure states
+## 16. Trayectoria local sin JSON
 
-`Corrupt trajectory record` -> hash-chain invalid; exclude/unresolved.
+Cada nodo posee una trayectoria append-only:
 
-`Missing predecessor` -> trajectory incomplete; unresolved.
+`Γ_n=(r_0,r_1,...,r_m)`.
 
-`Proposal without Decision` -> Pending.
+`r_i` es una realización tipada por contratos ya reconocidos. No tiene que ser un objeto JSON.
 
-`Rejected Decision` -> durable response; no DeltaC.
+Una realización compacta puede ser binaria o vectorial, por ejemplo conceptualmente:
 
-`Accepted Decision missing Proposal cause` -> unresolved continuity evidence in strict mode.
+`Assign = [opAssign, entityRef, parameterRef, encodedValue]`.
 
-`Stale proposal` -> reevaluate against current C; not automatically invalid.
+El contexto/contrato determina cómo decodificarla.
 
-`Reference target absent` -> reject/unresolved according to evidence completeness contract.
-
----
-
-## 17. Persistence profile for first implementation
-
-Browser-only:
-
-`HTML + CSS + JavaScript + IndexedDB`.
-
-No Node, no TypeScript, no Service Worker.
-
-IndexedDB stores append-only trajectory records and small local configuration.
-
-`C_h`, vectors, tables and UI are reconstructed projections; they are not stored as sovereign truth.
-
-Export/import JSON transports trajectory evidence between browsers/nodes.
+JSON puede existir únicamente como codec de depuración/exportación.
 
 ---
 
-## 18. First executable probe
+## 17. Posición local de trayectoria
 
-The UI must expose simultaneously:
+En `Γ_n`, la posición `i` ya representa el orden local.
 
-1. current node `Γ_n`;
-2. authority `Γ_A`;
-3. derived continuity facts `C_h`;
-4. entity sequences/positions;
-5. logical vectors;
-6. pending/accepted/rejected proposals;
-7. entity/parameter/element editors.
+No debe repetirse dentro del payload si el Storage ya conserva inequívocamente la secuencia.
 
-Success means the user can see that a local proposal exists before C changes, and that only an accepted Authority decision changes C.
+De la trayectoria pueden derivarse:
+
+`RecordHash_n[i]=H(r_i)`
+
+`PrefixHash_n[i]=H(PrefixHash_n[i-1] || i || RecordHash_n[i])`.
+
+Posición localiza; hash verifica.
+
+Hash no crea orden ni Authority.
 
 ---
 
-## 19. Canonical summary
+## 18. Continuidad desde múltiples trayectorias
 
-**El nodo escribe su trayectoria; la Authority escribe decisiones en la suya; la continuidad emerge de aquello que las decisiones autorizadas constituyen.**
+Evidencia disponible:
 
-**La continuidad no es una trayectoria global.**
+`E = ⨿ Γ_n`.
 
-**Las posiciones y vectores se derivan de la continuidad, nunca del orden físico de IndexedDB.**
+El coproducto conserva procedencia y orden local. No inventa orden total global.
 
-**Local-first significa que toda acción nace como evidencia local y toda lectura interpreta evidencia local reconocida.**
+Los nodos escriben propuestas/hechos en su trayectoria local.
+
+Authority constituye cuáles pasan a formar parte de `C` y añade solo las relaciones causales/ordenadoras necesarias.
+
+`C != Γ_A`
+
+y:
+
+`C != concatenación de Γ_n`.
+
+Continuidad es la realidad causal constituida reconocible a partir de esas evidencias.
+
+---
+
+## 19. Authority sin duplicar el hecho
+
+Para máxima simplicidad, una decisión de Authority debe referenciar la causa local, no copiar su contenido.
+
+Ejemplo:
+
+`q @ (node42,17)`
+
+`Decision_A(ref=(node42,17), ACCEPT, constraints/order)`.
+
+Si se acepta, C reconoce el hecho referenciado.
+
+Si se rechaza, la propuesta sigue existiendo en Γ_node42 pero no constituye realidad de App.
+
+Esto evita guardar dos veces la misma causa.
+
+---
+
+## 20. Flujo maestro de escritura
+
+`Action`
+` -> encode using current contracts`
+` -> append proposal/fact to Γ_n`
+` -> local coordinate (n,i)`
+` -> Authority evaluates against C_h / 𝕍_h`
+` -> Decision_A(ref=(n,i), accept|reject, minimal causal relations)`
+` -> C_h'`
+` -> FoldVectorDelta(𝕍_h,ΔC)`
+` -> 𝕍_h'`
+` -> project UI`.
+
+Ni JSON ni una tabla relacional participan en la semántica del flujo.
+
+---
+
+## 21. Flujo maestro de lectura
+
+`local trajectory evidence`
+` -> verify material/prefix`
+` -> recognize Authority decisions`
+` -> reconstruct C_h`
+` -> fold to 𝕍_h`
+` -> answer from vectors`
+` -> project only requested representation`.
+
+Normalmente la App consulta `𝕍_h`, no recorre C completa en cada interacción.
+
+---
+
+## 22. Local-first
+
+Creación:
+
+`action -> Γ_n(local) -> pending/outbox`.
+
+Recepción:
+
+`network -> verify -> persist local trajectory evidence -> reconstruct/advance C -> advance 𝕍`.
+
+Regla:
+
+**La red transporta evidencia; el nodo interpreta desde evidencia persistida localmente.**
+
+---
+
+## 23. Incrementalidad
+
+Replay completo:
+
+`𝕍_h=FoldVectors(C_h)`.
+
+Delta:
+
+`𝕍_h'=FoldVectorDelta(𝕍_h,ΔC)`.
+
+Ley:
+
+`FoldVectorDelta(FoldVectors(C_h),ΔC)=FoldVectors(C_h')`.
+
+Para un Assign normal, el delta puede tocar una sola coordenada de un solo vector más sus dependencias derivadas.
+
+---
+
+## 24. Qué se puede cachear
+
+Por rendimiento pueden persistirse:
+
+`𝕍_h`, mapas `identity->position`, índices de búsqueda, snapshots, JSON, SQLite, tablas, bitmaps.
+
+Todos son borrables si su procedencia/corte es conocido.
+
+`DerivedCache != CausalAuthority`.
+
+---
+
+## 25. Estado operacional vs historia
+
+`C_h` conserva historia/semántica causal.
+
+`𝕍_h` conserva la actualidad operacional derivada.
+
+Regla central:
+
+**La continuidad conserva significado y causas; los vectores conservan operacionalmente la actualidad; las demás estructuras son vistas.**
+
+---
+
+## 26. Flujo mínimo para la primera probeta
+
+1. `DefineEntity(Product)`.
+2. `DefineParameter(Name,Product,Text,Assignment)`.
+3. `DefineParameter(Price,Product,FixedPoint,Assignment)`.
+4. `AdmitEntity(Product,P0)`.
+5. `Assign(P0,Name,'Camisa')`.
+6. `Assign(P0,Price,50000)`.
+7. comprobar `S_Product=[P0]`.
+8. comprobar `V_Name=['Camisa']`.
+9. comprobar `V_Price=[50000]`.
+10. derivar Table y JSON y verificar que al borrarlos se reconstruyen iguales.
+
+Después:
+
+11. añadir P1 y comprobar extensión por coordenada.
+12. añadir un parámetro nuevo y comprobar que no se reescribe ninguna entidad.
+13. añadir Invariant Price/Discount.
+14. añadir Sale + Stock FoldByRef.
+15. repetir con dos nodos y Authority para comprobar mapeo local->continuidad.
+
+---
+
+## 27. Criterios de falsación
+
+El diseño falla si:
+
+- crear una entidad exige schema JSON;
+- añadir un parámetro obliga a reescribir elementos antiguos;
+- crear un elemento obliga a escribir `null` para todos los parámetros;
+- JSON/SQL se vuelve necesario para interpretar C;
+- una posición local se usa globalmente sin contexto;
+- Authority copia causas cuando basta referenciarlas;
+- el stock se escribe además de la venta que lo determina;
+- borrar una materialización derivada impide reconstruir la actualidad.
+
+---
+
+## 28. Fórmula canónica
+
+`⊔ Γ_n`
+`  -> Authority + causal relations`
+`  -> C_h`
+`  -> FoldVectors`
+`  -> 𝕍_h`
+`  -> Projection_X`
+`  -> X`.
+
+Donde X puede ser JSON, SQL, Table, UI, API, Catalog, SearchIndex o Snapshot.
+
+**JSON deja de ser arquitectura y vuelve a ser lo que siempre debió ser: una representación opcional.**
