@@ -88,3 +88,20 @@ Orden de investigación:
 8. introducir relaciones entre parámetros.
 
 No avanzar a Commerce hasta que estos mecanismos sean independientes del vocabulario de negocio.
+
+## Foco inmediato refinado — contrato mínimo y relaciones
+
+Trabajar desde una sola `C_app` autocontenida.
+
+Probetas siguientes:
+
+1. contrato mínimo `DefineEntity`;
+2. contrato mínimo `DefineParameter`;
+3. tipos universales de valor;
+4. evoluciones `Assignment | Fold | Derived | State`;
+5. relaciones `Reference | Invariant | Derivation | AdmissionGuard`;
+6. caso `DiscountPrice <= Price` para secuenciación;
+7. caso `Sale -> Stock` para fold + guard + atomicidad;
+8. generación automática de formularios/tablas desde contratos.
+
+No separar schema y datos en continuidades distintas salvo que aparezca una realidad causal verdaderamente independiente.
