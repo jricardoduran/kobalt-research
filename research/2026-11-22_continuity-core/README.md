@@ -451,3 +451,25 @@ JSON, SQL, tablas y objetos de dominio dejan de ser estructuras primarias. Se de
 `NEW_CHAT_PROMPT_VECTOR_FIRST.md` contiene un prompt de reinicio para continuar en un chat nuevo sin arrastrar complejidad histórica.
 
 **Si una formulación anterior contradice este canon por introducir representación innecesaria, preferir el canon vector-first y revisar la discrepancia explícitamente.**
+
+## 32. Invariante prioritario — geometría vectorial
+
+Debe repetirse deliberadamente en toda la línea de trabajo:
+
+**La trayectoria/continuidad constituida genera coordenadas; por eso la representación operacional natural es vectorial.**
+
+No usamos:
+
+`JSON -> vectors`.
+
+Usamos:
+
+`⊔ Γ_n -> C_h -> 𝕍_h -> Projection_X`.
+
+JSON, SQL, tablas, APIs y objetos de dominio son derivados.
+
+`VECTOR_FIRST_CANON.json` contiene esta doctrina en forma máquina-legible para que tooling y futuras probetas puedan consumir el mismo canon.
+
+Precisión de Authority:
+
+**Authority legitima la incorporación; el orden constitutivo produce la coordenada.**
